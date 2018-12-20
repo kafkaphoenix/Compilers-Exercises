@@ -1,0 +1,22 @@
+import java_cup.runtime.*;
+
+/*Terminales*/
+terminal INT, DOUBLE, PYC, COMA, DP;
+terminal String IDENT;
+
+/*No terminales*/
+
+non terminal String vars;
+non terminal linea;
+
+/*Precedencias*/
+precedence left PYC;
+
+/*Gramatica*/
+linea ::= vars:v DP INT PYC {: System.out.print("int " + v); :}
+		| vars:v DP DOUBLE PYC {: System.out.print("double " + v); :}
+	;	
+
+vars ::=  IDENT:i COMA vars:v {: RESULT = i + ", " + v; :} 
+		| IDENT:i {: RESULT = i + ";"; :}
+		;

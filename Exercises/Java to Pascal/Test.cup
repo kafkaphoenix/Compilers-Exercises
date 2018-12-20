@@ -1,0 +1,29 @@
+import java_cup.runtime.*;
+
+/*Terminales*/
+terminal INT, DOUBLE, PYC;
+terminal String IDENT;
+
+/*No terminales*/
+
+non terminal String varsint, varsdouble, exp;
+non terminal linea;
+
+/*Precedencias*/
+precedence left PYC;
+
+/*Gramatica*/
+linea ::= exp PYC 
+	;	
+
+exp ::= INT varsint
+		| DOUBLE varsdouble
+		;
+
+varsint ::=  IDENT:i {: RESULT = i; System.out.print(i + ":int; "); :} varsint
+		| IDENT:i {: RESULT = i; System.out.print(i + ":int;"); :} 
+		;
+
+varsdouble ::=  IDENT:i {: RESULT = i; System.out.print(i + ":double; "); :} varsdouble
+		| IDENT:i {: RESULT = i; System.out.print(i + ":double;"); :}
+		;

@@ -1,0 +1,5 @@
+define dimension 4
+situaN (0,2) situab (0,0)
+situan (2,2) situab (1,1)
+situan (0,1) situaB (2,2)
+situan (0,3) situab (3,3)

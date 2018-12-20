@@ -1,0 +1,21 @@
+import java_cup.runtime.*;
+
+/*Terminales*/
+terminal String IDENT, NUMERO;
+
+/*No terminales*/
+non terminal linea;
+non terminal String exp;
+
+/*Precedencias*/
+
+precedence left IDENT, NUMERO;
+
+/*Gramatica*/
+linea ::= exp:result linea {:System.out.print(result + " ");:} 
+	| exp:result {:System.out.print(result + " ");:}
+	;		
+
+exp	::=  IDENT:e {: RESULT = e; :}
+	| NUMERO:n {: RESULT = n; :}
+	;

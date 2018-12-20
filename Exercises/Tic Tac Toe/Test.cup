@@ -1,0 +1,95 @@
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code {:
+    public String [] []  matriz; 
+
+       public void imprimir(){
+        for(int i = 0 ; i < matriz.length; i++){
+            for (int z = 0 ; z < matriz.length; z++){
+                System.out.print(matriz[i][z]+" ");
+            }
+            System.out.println();
+        }
+    }
+        public void inicializar(){
+             for(int i = 0 ; i < matriz.length; i++){
+            for (int z = 0 ; z < matriz.length; z++){
+                matriz[i][z] = "V";
+            }
+        }
+        }
+
+        public boolean comprobarGanador(String j){
+			boolean fila = true;
+			boolean col = true;
+			boolean invdiag = true;
+			boolean diag = true;
+            for(int i = 0 ; i < matriz.length; i++){
+				for (int z = 0 ; z < matriz.length; z++){
+                if(matriz[i][z] != j){
+                    fila =  false;
+                }
+				}
+				if (fila) {
+					return true;
+				}
+				fila =  true;
+			}
+            for(int i = 0 ; i < matriz.length; i++){
+				for (int z = 0 ; z < matriz.length; z++){
+                if(matriz[z][i] != j){
+                    col =  false;
+                } 
+				}
+				if (col) {
+					return true;
+				}
+				col = true;
+			}
+			
+           for(int k = 0 ; k < matriz.length; k++){
+                if(matriz[k][matriz.length - k - 1] != j){
+					invdiag = invdiag && false;
+				}
+			}
+            for(int t = 0 ; t < matriz.length; t++){
+                if(matriz[t][t] != j){
+					diag = diag && false;
+				}
+			}
+            return invdiag || diag;
+        }
+
+		public void comprobar(){
+			if (comprobarGanador("N")){
+				 System.out.print("Ganan Negras");
+				 }
+				 else 
+					if(comprobarGanador("B")){ 
+					System.out.print("Ganan Blancas");
+					}
+                 else {
+					 System.out.print("Empate");
+				 }
+                
+		}
+ 
+
+        :};
+
+terminal Integer NUM,DIM;
+terminal SITB,SITN;
+non terminal listac, listatres, exp;
+
+
+
+
+listac ::= DIM:e {: matriz = new String[e][e]; inicializar(); :} exp {: imprimir(); comprobar();
+                :};
+
+exp::= SITN NUM:x NUM:y {: matriz[x][y] = "N"; :} exp  
+    |SITB NUM:x NUM:y {: matriz[x][y] = "B"; :}  exp 
+    |SITN NUM:x NUM:y {: matriz[x][y] = "N"; :} 
+    |SITB NUM:x NUM:y {: matriz[x][y] = "B"; :}
+    ;

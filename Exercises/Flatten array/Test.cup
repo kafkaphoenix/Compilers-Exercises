@@ -1,0 +1,27 @@
+import java_cup.runtime.*;
+
+/*Terminales*/
+terminal AC, CC, COMA;
+terminal Integer NUMERO;
+
+/*No terminales*/
+non terminal linea;
+non terminal String exp, exp2;
+
+/*Precedencias*/
+precedence left COMA, NUMERO;
+precedence left AC, CC;
+
+/*Gramatica*/
+linea ::= AC exp:result CC {:System.out.println("["+result+"]");:}
+	;		
+
+exp	::=   AC exp:e CC exp2:e2 	{:  RESULT = e + e2;:}
+	|     NUMERO:n exp2:s						{: RESULT= n + s; :}
+	|      {: RESULT = "NULL"; :}
+	;
+
+exp2 ::= COMA AC exp:x CC exp2:y       {: RESULT= ", " + x + y; :}
+	|     COMA NUMERO:e exp2:e2			{: RESULT = ", " + e + e2; :}
+	|	{: RESULT = ""; :}
+	;

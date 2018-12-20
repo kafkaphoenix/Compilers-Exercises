@@ -1,0 +1,26 @@
+import java_cup.runtime.*;
+
+action code {:
+	boolean fib;
+	int n1,n2,n3;
+
+:};
+
+/*Terminales*/
+terminal Integer NUMERO;
+
+/*No terminales*/
+non terminal linea;
+non terminal String exp;
+
+/*Precedencias*/
+
+/*Gramatica*/
+linea ::= exp {:  
+					if(fib) System.out.print("SI");
+					else System.out.print("NO");
+			  :};
+
+exp	::= exp NUMERO:e			{: fib = (fib && ((n1+n2) == e)); n1 = n2; n2 = e;:}
+	| NUMERO:e1	NUMERO:e2		{: fib = true; n1 = e1; n2 = e2; :}
+	;

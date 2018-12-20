@@ -1,0 +1,32 @@
+import java_cup.runtime.*;
+
+action code {: 
+	int np = -1;
+
+:};
+
+/*Terminales*/
+terminal AC, CC, COMA;
+terminal Integer NUMERO;
+
+/*No terminales*/
+non terminal linea;
+non terminal Integer exp, exp2;
+
+/*Precedencias*/
+precedence left COMA, NUMERO;
+precedence left AC, CC;
+
+/*Gramatica*/
+linea ::= AC exp:result CC {:System.out.println(result);np--;:}
+	;		
+
+exp	::=   AC exp:e CC exp2:e2 	{: np++; RESULT = (e)*2^np + e2; np--;:}
+	|     NUMERO:n exp2:s						{: RESULT= n + s; :}
+	|      {: RESULT = 0; :}
+	;
+
+exp2 ::= COMA AC exp:x CC exp2:y       {: np++;RESULT= 2*x + y;np--; :}
+	|     COMA NUMERO:e exp2:e2			{: RESULT = e+e2; :}
+	|	{: RESULT = 0; :}
+	;
